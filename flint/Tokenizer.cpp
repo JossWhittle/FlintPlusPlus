@@ -255,7 +255,7 @@ namespace flint {
 		size_t tokenLen;
 		string whitespace = "";
 
-		while (1) {
+		while (pc != input.end()) {
 			const char c = *pc;
 
 			// Special case for parseing #include <...>
@@ -392,7 +392,7 @@ namespace flint {
 			case '\0':
 				//assert(pc.size() == 0);
 				// Push last token, the EOF
-				output.push_back(Token(TK_EOF, string(&*pc), line, whitespace));
+				output.push_back(Token(TK_EOF, "", line, whitespace));
 				return;
 				// *** Verboten characters (do allow '@' and '$' as extensions)
 			case '`':
