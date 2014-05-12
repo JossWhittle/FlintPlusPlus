@@ -11,8 +11,6 @@ namespace flint {
 
 	namespace { // Anonymous Namespace for Tokenizing and munching functions
 		
-		typedef pair<string::const_iterator*, string::const_iterator> StringRange;
-
 		// Black magic code expansion from Token Definitions
 		// See header...
 		static map<string, TokenType> initializeKeywords() {
@@ -52,9 +50,8 @@ namespace flint {
 		* Assuming pc is positioned at the start of an identifier, munches it
 		* from pc and returns it.
 		*/
-		static string munchIdentifier(StringRange range) {
-			auto& pc = *(range.first);
-			size_t size = distance(pc, range.second);
+		static string munchIdentifier(string::const_iterator &pc, string::const_iterator str_end) {
+			size_t size = distance(pc, str_end);
 			for (size_t i = 0; i < size; ++i) {
 				assert(i < size);
 				const char c = *(pc + i);
@@ -67,7 +64,7 @@ namespace flint {
 					return munchChars(pc, i);
 				}
 			}
-			return munchChars(pc, distance(pc, range.second));
+			return munchChars(pc, size);
 		};
 
 		/**
@@ -496,7 +493,7 @@ namespace flint {
 				}
 				else if (isalpha(c) || c == '_' || c == '$' || c == '@') {
 					// it's a word
-					auto symbol = munchIdentifier(make_pair(&pc, input.end()));
+					auto symbol = munchIdentifier(pc, input.cend());
 					auto iter = keywords.find(symbol);
 					if (iter != keywords.end()) {
 						// keyword, baby
