@@ -246,7 +246,7 @@ namespace flint {
 	size_t tokenize(const string &input, const string &file, vector<Token> &output) {
 		output.clear();
 		
-		static const string eof{"\0"};
+		static const string eof("\0");
 
 		auto pc = input.begin();
 		size_t line = 1;
