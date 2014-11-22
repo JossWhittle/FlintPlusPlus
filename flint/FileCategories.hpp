@@ -2,8 +2,6 @@
 
 #include <string>
 
-using namespace std;
-
 namespace flint {
 
 	// Indentifiers for files marked for linting
@@ -12,11 +10,11 @@ namespace flint {
 	};
 
 	// File identifying functions...
-	FileCategory getFileCategory(const string &path);
+	FileCategory getFileCategory(const std::string &path);
 
-	bool isHeader(const string &path);
-	bool isSource(const string &path);
+	bool isHeader(const std::string &path);
+	bool isSource(const std::string &path);
 
-	string getFileNameBase(const string &path);
-	string getFileName(const string &path);
+	std::string getFileNameBase(const std::string &path);
+	std::string getFileName(const std::string &path);
 };

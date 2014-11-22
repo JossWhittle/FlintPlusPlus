@@ -4,6 +4,8 @@
 
 #include "Polyfill.hpp"
 
+using namespace std;
+
 namespace flint {
 
 	// Constants

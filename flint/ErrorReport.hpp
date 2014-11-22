@@ -18,12 +18,12 @@ namespace flint {
 		// Members
 		const Lint m_type;
 		const size_t m_line;
-		const string m_title, m_desc;
+		const std::string m_title, m_desc;
 
 	public:
 
 		// Constructor
-		ErrorObject(Lint type, size_t line, string title, string desc) :
+		ErrorObject(Lint type, size_t line, std::string title, std::string desc) :
 			m_type(type), m_line(line), m_title(move(title)), m_desc(move(desc)) {};
 
 		// Getter
@@ -36,10 +36,10 @@ namespace flint {
 		* JSON or Pretty Printed format
 		*
 		*/
-		void print(const string &path) const {
+		void print(const std::string &path) const {
 
-			static const array<string, 6> typeStr = {
-				"[Error  ] ", "[Warning] ", "[Advice ] ", "Error", "Warning", "Advice"
+			static const std::array<std::string, 6> typeStr = {
+				{ "[Error  ] ", "[Warning] ", "[Advice ] ", "Error", "Warning", "Advice" }
 			};
 
 			if (Options.LEVEL < m_type) {
@@ -47,9 +47,9 @@ namespace flint {
 			}
 
 			if (Options.JSON) {
-				cout <<	"        {\n"
+				std::cout <<	"        {\n"
 					"	        \"level\"    : \"" << typeStr[m_type + 3u]  << "\",\n"
-					"	        \"line\"     : "   << to_string(m_line)     << ",\n"
+					"	        \"line\"     : "   << std::to_string(m_line)     << ",\n"
 					"	        \"title\"    : \"" << escapeString(m_title) << "\",\n"
 					"	        \"desc\"     : \"" << escapeString(m_desc)  << "\"\n"
 					"        }";
@@ -57,8 +57,8 @@ namespace flint {
 				return;
 			}
 
-			cout << typeStr[m_type] << path << ':' 
-				 << to_string(m_line) << ": " << m_title << endl;
+			std::cout << typeStr[m_type] << path << ':' 
+				 << std::to_string(m_line) << ": " << m_title << std::endl;
 		};
 	};
 
@@ -93,12 +93,12 @@ namespace flint {
 	class ErrorFile : public ErrorBase {
 	private:
 		// Members
-		vector<ErrorObject> m_objs;
-		const string m_path;
+		std::vector<ErrorObject> m_objs;
+		const std::string m_path;
 
 	public:
 
-		explicit ErrorFile(string path) : ErrorBase(), m_path(move(path)) {};
+		explicit ErrorFile(std::string path) : ErrorBase(), m_path(move(path)) {};
 
 		void addError(ErrorObject error) {
 			if (error.getType() == Lint::ERROR) {
@@ -110,7 +110,7 @@ namespace flint {
 			if (error.getType() == Lint::ADVICE) {
 				++m_advice;
 			}
-			m_objs.push_back(move(error));
+			m_objs.push_back(std::move(error));
 		};
 
 		/*
@@ -120,22 +120,22 @@ namespace flint {
 		void print() const {
 
 			if (Options.JSON) {
-				cout << "    {\n"
+				std::cout << "    {\n"
 					"	    \"path\"     : \"" << escapeString(m_path)     << "\",\n"
-					"	    \"errors\"   : "   << to_string(getErrors())   << ",\n"
-					"	    \"warnings\" : "   << to_string(getWarnings()) << ",\n"
-					"	    \"advice\"   : "   << to_string(getAdvice())   << ",\n"
+					"	    \"errors\"   : "   << std::to_string(getErrors())   << ",\n"
+					"	    \"warnings\" : "   << std::to_string(getWarnings()) << ",\n"
+					"	    \"advice\"   : "   << std::to_string(getAdvice())   << ",\n"
 					"	    \"reports\"  : [\n";
 
 				for (size_t i = 0, size = m_objs.size(); i < size; ++i) {
 					if (i > 0) {
-						cout <<  ',' << endl;
+						std::cout <<  ',' << std::endl;
 					}
 
 					m_objs[i].print(m_path);
 				}
 
-				cout << "\n      ]\n"
+				std::cout << "\n      ]\n"
 						"    }";
 
 				return;
@@ -153,7 +153,7 @@ namespace flint {
 	class ErrorReport : public ErrorBase {
 	private:
 		// Members
-		vector<ErrorFile> m_files;
+		std::vector<ErrorFile> m_files;
 	public:
 
 		void addFile(ErrorFile file) {
@@ -161,7 +161,7 @@ namespace flint {
 			m_warnings	+= file.getWarnings();
 			m_advice	+= file.getAdvice();
 
-			m_files.push_back(move(file));
+			m_files.push_back(std::move(file));
 		};
 
 		/*
@@ -174,21 +174,21 @@ namespace flint {
 		void print() const {
 			
 			if (Options.JSON) {
-				cout << "{\n"
-					"	\"errors\"   : " << to_string(getErrors())   << ",\n"
-					"	\"warnings\" : " << to_string(getWarnings()) << ",\n"
-					"	\"advice\"   : " << to_string(getAdvice())   << ",\n"
+				std::cout << "{\n"
+					"	\"errors\"   : " << std::to_string(getErrors())   << ",\n"
+					"	\"warnings\" : " << std::to_string(getWarnings()) << ",\n"
+					"	\"advice\"   : " << std::to_string(getAdvice())   << ",\n"
 					"	\"files\"    : [\n";
 
 				for (size_t i = 0, size = m_files.size(); i < size; ++i) {
 					if (i > 0) {
-						cout << ',' << endl;
+						std::cout << ',' << std::endl;
 					}
 
 					m_files[i].print();
 				}
 
-				cout <<	"\n  ]\n"
+				std::cout <<	"\n  ]\n"
 						"}";
 
 				return;
@@ -200,16 +200,16 @@ namespace flint {
 				}
 			}
 
-			cout << "\nLint Summary: " << to_string(m_files.size()) << " files\n"
-				"Errors: " << to_string(getErrors());
+			std::cout << "\nLint Summary: " << std::to_string(m_files.size()) << " files\n"
+				"Errors: " << std::to_string(getErrors());
 
 			if (Options.LEVEL >= Lint::WARNING) {
-				cout << " Warnings: " << to_string(getWarnings());
+				std::cout << " Warnings: " << std::to_string(getWarnings());
 			}
 			if (Options.LEVEL >= Lint::ADVICE) {
-				cout << " Advice: " << to_string(getAdvice());
+				std::cout << " Advice: " << std::to_string(getAdvice());
 			}
-			cout << endl;
+			std::cout << std::endl;
 		};
 	};
 

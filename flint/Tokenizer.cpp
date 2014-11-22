@@ -9,6 +9,8 @@
 
 #include "Polyfill.hpp"
 
+using namespace std;
+
 namespace std {
 	template<>
 	struct hash<flint::StringFragment> {

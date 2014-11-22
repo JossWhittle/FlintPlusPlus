@@ -14,6 +14,8 @@
 #include "ErrorReport.hpp"
 #include "FileCategories.hpp"
 
+using namespace std;
+
 namespace flint {
 
 // Shorthand for comparing two strings (or fragments)

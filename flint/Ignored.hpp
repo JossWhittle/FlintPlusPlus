@@ -2,8 +2,6 @@
 
 #include <string>
 
-using namespace std;
-
 namespace flint {
 	
 	/**
@@ -11,5 +9,5 @@ namespace flint {
 	 * "// %flint: resume", so that intentionally written code, that may
 	 * generate warnings, can be ignored by lint.
 	 */
-	string removeIgnoredCode(const string &file, const string &path);
+	std::string removeIgnoredCode(const std::string &file, const std::string &path);
 };

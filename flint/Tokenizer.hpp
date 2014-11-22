@@ -8,8 +8,6 @@
 
 #include "ErrorReport.hpp"
 
-using namespace std;
-
 namespace flint {
 
 	/**
@@ -224,16 +222,16 @@ namespace flint {
 	/**
 	* Converts e.g. TK_VIRTUAL to "TK_VIRTUAL".
 	*/
-	string toString(TokenType t);
+	std::string toString(TokenType t);
 
 	/**
-	 * Defines a substring of an existing string.  Lifetime is limited to the lifetime of the enclosing string
+	 * Defines a substd::string of an existing string.  Lifetime is limited to the lifetime of the enclosing string
 	 * In other words, a StringFragment will take no ownership of any memory.
 	 *
 	 * Note: Remember to respect the range of most C++ iterators, which operate on [begin, end) (so end expected to be out of range)
 	 */
 	struct StringFragment {
-		typedef string::const_iterator iterator;
+		typedef std::string::const_iterator iterator;
 		typedef char value_type;
 		typedef const char& const_reference;
 		typedef size_t size_type;
@@ -262,8 +260,8 @@ namespace flint {
 	};
 
 	using std::to_string;
-	inline string to_string(const StringFragment &fragment) {
-		return string(fragment.begin(), fragment.end());
+	inline std::string to_string(const StringFragment &fragment) {
+		return std::string(fragment.begin(), fragment.end());
 	}
 
 	inline bool operator==(const StringFragment &a, const StringFragment &b) {
@@ -285,29 +283,29 @@ namespace flint {
 		size_t line_;
 
 		Token(TokenType type, StringFragment value, size_t line, StringFragment whitespace)
-			: type_(type), value_(move(value)), precedingWhitespace_(move(whitespace)), line_(line) {};
+			: type_(type), value_(std::move(value)), precedingWhitespace_(std::move(whitespace)), line_(line) {};
 
-		string toString() const {
-			string result = string("Line:" + to_string(line_) + ':');
+		std::string toString() const {
+			std::string result = std::string("Line:" + to_string(line_) + ':');
 			result.append(value_.begin(), value_.end());
 			return result;
 		};
 	};
 
 	/**
-	* This is the quintessential function. Given a string containing C++
+	* This is the quintessential function. Given a std::string containing C++
 	* code and a filename, fills output with the tokens in the
 	* file.
 	*/
-	size_t tokenize(const string &input, const string &initialFilename, vector<Token> &output, vector<size_t> &structures, ErrorFile &errors);
+	size_t tokenize(const std::string &input, const std::string &initialFilename, std::vector<Token> &output, std::vector<size_t> &structures, ErrorFile &errors);
 
 	/**
 	* Prevent the use of temporaries for input and filename
 	* because the resulting tokens contain StringPiece objects pointing
 	* into them.
 	*/
-	size_t tokenize(string&&, const string &, vector<Token> &, vector<size_t> &, ErrorFile &) = delete;
-	size_t tokenize(const string&, string &&, vector<Token> &, vector<size_t> &, ErrorFile &) = delete;
+	size_t tokenize(std::string&&, const std::string &, std::vector<Token> &, std::vector<size_t> &, ErrorFile &) = delete;
+	size_t tokenize(const std::string&, std::string &&, std::vector<Token> &, std::vector<size_t> &, ErrorFile &) = delete;
 };
 
 namespace std {
