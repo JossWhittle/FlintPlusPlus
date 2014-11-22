@@ -71,7 +71,7 @@ Does it pass Linting itself?
 	
 	$ flint++ ./
 
-	Lint Summary: 13 files
+	Lint Summary: 14 files
 	Errors: 0 Warnings: 0 Advice: 0
 
 Compiling `Flint++` from source
@@ -96,7 +96,7 @@ Dependencies
 Tested On
 ---------
 
-So far I've managed to compile and test `Flint++` on Windows 7/8/8.1, Ubuntu 14.04, and Raspbian Wheezy; compiling under MSVC++ '13 and G++ 4.7 respectively. Edit: We also have word people have successfully compiled under OSX with Clang 3.5
+So far I've managed to compile and test `Flint++` on Windows 7/8/8.1, Ubuntu 14.10, and Raspbian Wheezy; compiling under MSVC++ '13 and G++ 4.8 respectively. Edit: We also have word people have successfully compiled under OSX with Clang 3.5
 
 ---
 
