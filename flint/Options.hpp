@@ -3,10 +3,8 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 namespace flint {
-	
+
 	enum Lint {
 		ERROR, WARNING, ADVICE
 	};
@@ -18,8 +16,8 @@ namespace flint {
 		bool VERBOSE;
 		int  LEVEL;
 	};
-	extern OptionsInfo Options;	
-	
-	void printHelp(); 
-	void parseArgs(int argc, char *argv[], vector<string> &paths);
+	extern OptionsInfo Options;
+
+	void printHelp();
+	void parseArgs(int argc, char *argv[], std::vector<std::string> &paths);
 };

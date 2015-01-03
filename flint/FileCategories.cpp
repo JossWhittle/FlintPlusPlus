@@ -6,6 +6,8 @@
 
 #include "Polyfill.hpp"
 
+using namespace std;
+
 namespace flint {
 
 	// File Extensions to lint

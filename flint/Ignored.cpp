@@ -4,6 +4,8 @@
 
 #include "Polyfill.hpp"
 
+using namespace std;
+
 namespace flint {
 
 	// Constants
@@ -52,7 +54,7 @@ namespace flint {
 					uint lineNo = (uint)count(file.begin(), file.begin() + posPause, '\n');
 					++lineNo;
 
-					fprintf(stderr, "%s(%d): No matching \"%s\" found for \"%s\"\n",
+					fprintf(stderr, "%s(%u): No matching \"%s\" found for \"%s\"\n",
 						path.c_str(), lineNo, kIgnoreResume.c_str(), kIgnorePause.c_str());
 
 					result += file.substr(pos);

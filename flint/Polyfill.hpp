@@ -8,8 +8,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 typedef unsigned int uint;
 
 #ifdef _MSC_VER  
@@ -34,17 +32,17 @@ namespace flint {
 		IS_DIR
 	};
 
-	FSType fsObjectExists(const string &path);
+	FSType fsObjectExists(const std::string &path);
 
-	bool fsContainsNoLint(const string &path);
+	bool fsContainsNoLint(const std::string &path);
 
-	bool fsGetDirContents(const string &path, vector<string> &dir);
+	bool fsGetDirContents(const std::string &path, std::vector<std::string> &dir);
 
-	bool getFileContents(const string &path, string &file);
+	bool getFileContents(const std::string &path, std::string &file);
 
-	bool startsWith(const string &str, const string &prefix);
+	bool startsWith(const std::string &str, const std::string &prefix);
 
-	bool startsWith(string::const_iterator str_iter, const char *prefix);
+	bool startsWith(std::string::const_iterator str_iter, const char *prefix);
 
-	string escapeString(const string &input);
+	std::string escapeString(const std::string &input);
 };
