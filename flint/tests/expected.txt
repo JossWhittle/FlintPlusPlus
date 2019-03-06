@@ -52,7 +52,7 @@
 [Error  ] Throw.cpp:10: Heap-allocated exception: throw new (MyException)(); This is usually a mistake in c++.
 [Error  ] Throw.cpp:12: Heap-allocated exception: throw new MyException(); This is usually a mistake in c++.
 
-Lint Summary: 12 files
+Lint Summary: 14 files
 Errors: 23 Warnings: 29 Advice: 1
 
-Estimated Lines of Code: 292
+Estimated Lines of Code: 306
