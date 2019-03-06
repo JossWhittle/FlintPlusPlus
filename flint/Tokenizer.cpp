@@ -492,13 +492,13 @@ namespace flint {
 				// Skip ws
 				auto pc1 = pc + 1;
 				tokenLen = 1 + munchSpaces(pc1).size();
-				// define, include, pragma, or line
+				// The entire #line line is the token value
 				if (startsWith(pc1, "line")) {
-					t = TK_HASHLINE; tokenLen += distance(pc, find(pc1, input.end(), '\n'));
+					t = TK_HASHLINE; tokenLen += distance(pc1, find(pc1, input.end(), '\n'));
 				}
 				else if (startsWith(pc1, "error")) {
 					// The entire #error line is the token value
-					t = TK_ERROR; tokenLen += distance(pc, find(pc1, input.end(), '\n'));
+					t = TK_ERROR; tokenLen += distance(pc1, find(pc1, input.end(), '\n'));
 					ENFORCE(tokenLen > 0, "Unterminated #error message");
 				}
 				else if (startsWith(pc1, "include")) {
